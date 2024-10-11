@@ -243,7 +243,7 @@ public class Main {
 				}
 			}
 		}
-		Egg = new HashMap<>();
+		Egg.clear();
 	}
 
 	public static void updateDeadLife() {
@@ -251,8 +251,7 @@ public class Main {
 		for(String pos: positions) {
 			ArrayList<Integer> dead = DeadMon.get(pos);
 			for(int i=0;i<dead.size(); i++) {
-				int life = dead.get(i) + 1;
-				dead.set(i, life);
+				dead.set(i, dead.get(i) + 1);
 			}
 			DeadMon.put(pos, dead);
 		}
