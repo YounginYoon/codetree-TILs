@@ -47,11 +47,7 @@ public class Main {
 		for(int i=0;i<t;i++) {
 			copyEgg();
 			moveMonster();
-			//System.out.println("move");
-			//printMonster();
 			movePacMan();
-			//System.out.println("move Pacman " + PacR + " " + PacC);
-			//printMonster();
 			removeDead();
 			makeEggToMonster();
 			updateDeadLife();
@@ -148,7 +144,6 @@ public class Main {
 					check[nr][nc] = true;
 				}
 				cr = nr; cc = nc;
-				//System.out.printf("%d %d -> ", cr, cc);
 			}
 
 			if (!out) {
@@ -163,32 +158,60 @@ public class Main {
 		
 		if (maxIdx != -1) {
 			int[] path = pacmanMove.get(maxIdx);
-			//System.out.printf("pacman move " + maxEat + " ");
-			//for(int x=0;x<3;x++) System.out.printf("%d ", path[x]);
-			//System.out.println();
 			int cr = PacR, cc = PacC;
 			ArrayList<Monster> newAliveMon = new ArrayList<>();
 			boolean[] deadCheck = new boolean[AliveMon.size()];
+			HashMap<String, ArrayList<Integer>> AliveMap = new HashMap<>();
+			
+			
+			for(int i=0;i<AliveMon.size();i++) {
+				Monster mon = AliveMon.get(i);
+				String pos = makeStr(mon.r, mon.c);
+				if (!AliveMap.containsKey(pos)) {
+					ArrayList<Integer> newList = new ArrayList<>();
+					newList.add(i);
+					AliveMap.put(pos, newList);
+				}
+				else {
+					ArrayList<Integer> newList = AliveMap.get(pos);
+					newList.add(i);
+					AliveMap.put(pos, newList);
+				}
+			}
 			
 			for(int i=0;i<3;i++) {
 				int d = path[i];
 				int nr = cr + dirPac[d][0], nc = cc + dirPac[d][1];
-				for(int j=0;j<AliveMon.size();j++) {
-					Monster monster = AliveMon.get(j);
-					if (monster.r == nr && monster.c == nc) {
-						String pos = makeStr(nr, nc);
-						if (DeadMon.containsKey(pos)) {
-							ArrayList<Integer> dead = DeadMon.get(pos);
-							dead.add(0);
-							DeadMon.put(pos, dead);
-						}
-						else {
-							ArrayList<Integer> dead = new ArrayList<>();
-							dead.add(0);
-							DeadMon.put(pos, dead);
-						}
-						deadCheck[j] = true;
+				
+//				for(int j=0;j<AliveMon.size();j++) {
+//					Monster monster = AliveMon.get(j);
+//					if (monster.r == nr && monster.c == nc) {
+//						String pos = makeStr(nr, nc);
+//						if (DeadMon.containsKey(pos)) {
+//							ArrayList<Integer> dead = DeadMon.get(pos);
+//							dead.add(0);
+//							DeadMon.put(pos, dead);
+//						}
+//						else {
+//							ArrayList<Integer> dead = new ArrayList<>();
+//							dead.add(0);
+//							DeadMon.put(pos, dead);
+//						}
+//						deadCheck[j] = true;
+//					}
+//				}
+				
+				String pos = makeStr(nr, nc);
+				ArrayList<Integer> deadList = DeadMon.get(pos);
+				if (deadList == null) deadList = new ArrayList<>();
+				
+				ArrayList<Integer> list = AliveMap.get(pos);
+				if (list != null) {
+					for(int idx: list) {
+						deadList.add(idx);
+						deadCheck[idx] = true;
 					}
+					DeadMon.put(pos, deadList);
 				}
 				cr = nr; cc = nc;
 			}
@@ -261,13 +284,6 @@ public class Main {
 			this.r = r;
 			this.c = c;
 			this.d = d;
-		}
-	}
-	
-	public static void printMonster() {
-		for(int i=0;i<AliveMon.size();i++) {
-			Monster monster = AliveMon.get(i);
-			System.out.printf("%d %d %d\n", monster.r, monster.c, monster.d);
 		}
 	}
 	
