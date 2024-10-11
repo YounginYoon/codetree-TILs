@@ -67,7 +67,8 @@ public class Main {
 	
 	public static void copyEgg() {
 		// 몬스터의 각자 위치에서 자신과 방향이 똑같은 알을 복제한다
-		for(int i=0;i<AliveMon.size();i++) {
+		int n = AliveMon.size();
+		for(int i=0;i<n;i++) {
 			Monster monster = AliveMon.get(i);
 			String pos = makeStr(monster.r, monster.c);
 			if (!Egg.containsKey(pos)) {
@@ -83,7 +84,8 @@ public class Main {
 	
 	public static void moveMonster() {
 		// 자신의 방향에서 1칸 이동
-		for(int i=0;i<AliveMon.size();i++) {
+		int n = AliveMon.size();
+		for(int i=0;i<n;i++) {
 			Monster monster = AliveMon.get(i);
 			int cnt = 0;
 			int d = monster.d;
@@ -113,8 +115,9 @@ public class Main {
 	public static void movePacMan() {
 		int[][] dirPac = {{-1,0},{0,-1},{1,0},{0,1}};
 		int[][] cnt = new int[4][4];
+		int n = AliveMon.size();
 		
-		for(int i=0;i<AliveMon.size();i++) {
+		for(int i=0;i<n;i++) {
 			Monster monster = AliveMon.get(i);
 			cnt[monster.r][monster.c] += 1;
 		}
@@ -123,7 +126,8 @@ public class Main {
 		int maxEat = -1;
 		int maxIdx = -1;
 		int maxR = -1, maxC = -1;
-		for(int i=0;i<pacmanMove.size();i++) {
+		int pn = pacmanMove.size();
+		for(int i=0;i<pn;i++) {
 			int[] path = pacmanMove.get(i);
 			int cr = PacR, cc = PacC;
 			boolean out = false;
@@ -162,7 +166,7 @@ public class Main {
 			HashMap<String, ArrayList<Integer>> AliveMap = new HashMap<>();
 			
 			
-			for(int i=0;i<AliveMon.size();i++) {
+			for(int i=0;i<n;i++) {
 				Monster mon = AliveMon.get(i);
 				String pos = makeStr(mon.r, mon.c);
 				if (!AliveMap.containsKey(pos)) {
@@ -197,7 +201,7 @@ public class Main {
 			}
 			PacR = maxR;
 			PacC = maxC;
-			for(int i=0;i<AliveMon.size(); i++) {
+			for(int i=0;i<n; i++) {
 				if (!deadCheck[i]) {
 					Monster alive = AliveMon.get(i);
 					newAliveMon.add(alive);
@@ -212,15 +216,16 @@ public class Main {
 		Set<String> positions = DeadMon.keySet();
 		for(String pos: positions) {
 			ArrayList<Integer> dead = DeadMon.get(pos);
+			int n = dead.size();
 			if (dead != null) {
 				boolean[] check = new boolean[dead.size()];
 				ArrayList<Integer> newDead = new ArrayList<>();
-				for(int i=0;i<dead.size();i++) {
+				for(int i=0;i<n;i++) {
 					if (dead.get(i) == 2) {
 						check[i] = true;
 					}
 				}
-				for(int i=0;i<dead.size();i++) {
+				for(int i=0;i<n;i++) {
 					if (!check[i]) {
 						newDead.add(dead.get(i));
 					}
@@ -250,7 +255,8 @@ public class Main {
 		Set<String> positions = DeadMon.keySet();
 		for(String pos: positions) {
 			ArrayList<Integer> dead = DeadMon.get(pos);
-			for(int i=0;i<dead.size(); i++) {
+			int n = dead.size();
+			for(int i=0;i<n; i++) {
 				dead.set(i, dead.get(i) + 1);
 			}
 			DeadMon.put(pos, dead);
