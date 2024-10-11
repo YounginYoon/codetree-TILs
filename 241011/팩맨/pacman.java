@@ -206,14 +206,15 @@ public class Main {
 				if (deadList == null) deadList = new ArrayList<>();
 				
 				ArrayList<Integer> list = AliveMap.get(pos);
-				if (list != null) {
+				if (list != null) { // 해당 위치에 살아있는 몬스터가 있으니까 팩맨이 먹음 
 					for(int idx: list) {
-						deadList.add(idx);
+						deadList.add(0);
 						deadCheck[idx] = true;
 					}
 					DeadMon.put(pos, deadList);
 				}
 				cr = nr; cc = nc;
+				
 			}
 			PacR = maxR;
 			PacC = maxC;
