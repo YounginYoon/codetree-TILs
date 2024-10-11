@@ -100,8 +100,8 @@ public class Main {
 					String pos = makeStr(nr, nc);
 					if ((DeadMon.get(pos) == null || DeadMon.get(pos).size() == 0) && !(PacR == nr && PacC == nc)) {
 						// 현재 위치에 시체가 없거나, 팩맨과 같은 위치가 아닐 경우 이동
-						Monster update = new Monster(nr, nc, d);
-						AliveMon.set(i, update);
+						monster.r = nr;
+						monster.c = nc;
 						break;
 					}
 				}
