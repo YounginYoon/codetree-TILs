@@ -76,11 +76,8 @@ public class Main {
 				Egg.put(pos, eggDir);
 			}
 			else {
-				ArrayList<Integer> eggDir = Egg.get(pos);
-				eggDir.add(monster.d);
-				Egg.put(pos, eggDir);
+				Egg.get(pos).add(monster.d);
 			}
-			//System.out.println(pos + " " + monster.d);
 		}
 	}
 	
@@ -102,6 +99,7 @@ public class Main {
 						// 현재 위치에 시체가 없거나, 팩맨과 같은 위치가 아닐 경우 이동
 						monster.r = nr;
 						monster.c = nc;
+						monster.d = d;
 						break;
 					}
 				}
@@ -173,33 +171,14 @@ public class Main {
 					AliveMap.put(pos, newList);
 				}
 				else {
-					ArrayList<Integer> newList = AliveMap.get(pos);
-					newList.add(i);
-					AliveMap.put(pos, newList);
+					AliveMap.get(pos).add(i);
 				}
 			}
 			
 			for(int i=0;i<3;i++) {
 				int d = path[i];
 				int nr = cr + dirPac[d][0], nc = cc + dirPac[d][1];
-				
-//				for(int j=0;j<AliveMon.size();j++) {
-//					Monster monster = AliveMon.get(j);
-//					if (monster.r == nr && monster.c == nc) {
-//						String pos = makeStr(nr, nc);
-//						if (DeadMon.containsKey(pos)) {
-//							ArrayList<Integer> dead = DeadMon.get(pos);
-//							dead.add(0);
-//							DeadMon.put(pos, dead);
-//						}
-//						else {
-//							ArrayList<Integer> dead = new ArrayList<>();
-//							dead.add(0);
-//							DeadMon.put(pos, dead);
-//						}
-//						deadCheck[j] = true;
-//					}
-//				}
+			
 				
 				String pos = makeStr(nr, nc);
 				ArrayList<Integer> deadList = DeadMon.get(pos);
